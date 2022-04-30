@@ -14,10 +14,18 @@ const { NotImplementedError } = require('../extensions/index.js');
  * calculateHanoi(9, 4308) => { turns: 511, seconds: 427 }
  *
  */
-function calculateHanoi(/* disksNumber, turnsSpeed */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+/* формула '2 ** h - 1' она считает минимальное коллчиество ходов.
+   теперь нужно посичтать время, есть число ходов и скорость в час
+   колличество ходов разделить на скорость и на 3600(сеунд в часу) перегонки в сеундыч*/
+function calculateHanoi(disksNumber, turnsSpeed) {
+  let turns = (2 ** disksNumber) - 1
+  let seconds = Math.floor(turns / (turnsSpeed / 3600))
+  return {
+      turns,
+      seconds
+  }
 }
+
 
 module.exports = {
   calculateHanoi
