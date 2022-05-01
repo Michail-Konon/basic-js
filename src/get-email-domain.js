@@ -10,9 +10,15 @@ const { NotImplementedError } = require('../extensions/index.js');
  * For the input 'prettyandsimple@example.com', the output should be 'example.com'
  *
  */
-function getEmailDomain(/* email */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+/*Может я чего то не догнал, но мы просто задали @ как разделитель
+он нам создал массив со значениями до и после @ соответственно
+а потом .pop убираем последнее значение возвращая его 
+коим домен и является*/
+function getEmailDomain(email) {
+
+let domain = email.split('@')
+                  .pop()
+return domain
 }
 
 module.exports = {

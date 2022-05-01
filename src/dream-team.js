@@ -13,10 +13,27 @@ const { NotImplementedError } = require('../extensions/index.js');
  * createDreamTeam(['Olivia', 1111, 'Lily', 'Oscar', true, null]) => 'LOO'
  *
  */
-function createDreamTeam(/* members */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
-}
+/* Задаем первоначальный пустой массив,
+   дальше для каждого элемента, если он строка (===)
+   с помощью методов делаем регистр верхним и забираем первую букву
+   и возвращаем сортированный и объеденённый массив
+   пришлось добавить трим для того, чтобы убюрать пробелы */
+function createDreamTeam(members) {
+  if (!Array.isArray(members)) {
+      return false
+  }
+  let dreamTeam = [];
+  members.forEach(item => {
+      if (typeof item === "string") {
+          dreamTeam.push(item.trim()
+                             .toUpperCase()
+                             .charAt(0));
+      }
+  })
+  return dreamTeam.sort()
+                  .join('');
+};
+
 
 module.exports = {
   createDreamTeam
