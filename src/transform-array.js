@@ -13,49 +13,38 @@ const { NotImplementedError } = require('../extensions/index.js');
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-/* выдает 1) advanced sequence interactions work well как проваленую,
- судя по тестам, он должен применить обе управляющие функции в одном массиве
- к одной цифре 1337 не знаю как поправить, ничего из примененного не помогло
- да и хрен с ним, задолбало*/
 function transform(arr) {
-  
-  if(!Array.isArray(arr)) {
-    throw new Error("'arr' parameter must be an instance of the Array!");
-}
-
-let result = [];
-
-for (let i = 0; i < arr.length; i++) {
-
-    switch (arr[i]) {
-        case '--discard-next':
-            i++;
-            break;
-
-        case '--discard-prev':
-            result.pop();
-            break;
-
-        case '--double-next':
-            if (i < arr.length - 1) {
-                result.push(arr[i + 1]);
-            }
-            break;
-
-        case '--double-prev':
-            if (i > 0) {
-                result.push(arr[i - 1]);
-            }
-            break;
-
-        default:
-            result.push(arr[i]);
-
+    if(!Array.isArray(arr)) {
+        throw new Error("'arr' parameter must be an instance of the Array!");
     }
-}
-
-
-return result;
+    let result = [];
+    for (let i = 0; i < arr.length; ++i) {
+        switch (arr[i]) {
+            case '--double-next' :
+                if (i !== arr.length - 1) {
+                    result.push(arr[i + 1])
+                }
+                break;
+            case '--double-prev' :
+                if (i > 0 && arr[i - 2] !== '--discard-next') {
+                    result.push(arr[i - 1])
+                }
+                break;
+            case '--discard-next' :
+                if (i !== arr.length) {
+                   i++
+                }
+                break;
+            case '--discard-prev' :
+                if (i > 0 && arr[i - 2] !== '--discard-next') {
+                    result.pop();
+                }
+                break;
+            default:
+                result.push(arr[i]);
+        }
+    }
+    return result
 };
 
 module.exports = {
